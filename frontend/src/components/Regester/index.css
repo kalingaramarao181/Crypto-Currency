@@ -1,0 +1,67 @@
+.Er-bg1 {
+    width: 700px;
+    height: 660px;
+    text-align: center;
+    margin-left: 350px;
+    padding-top: 50px;
+    border-radius: 30px;
+
+}
+
+.Er-bg22 {
+    background-image: url("https://th.bing.com/th/id/OIP.GbMboU-krQvdIrfKgWpzXgHaFj?rs=1&pid=ImgDetMain");
+    height: 90vh;
+    background-size: cover;
+
+}
+
+.Er-head1 {
+    font-family: "roboto";
+    font-weight: bold;
+    color: white;
+
+}
+
+.Er-input1 {
+    height: 5vh;
+    width: 32vw;
+    border-radius: 6px;
+    font-size: 1vw;
+    margin-bottom: 1vh;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    border: none;
+
+}
+
+.Er-input12 {
+    height: 10vh;
+    width: 32vw;
+    border-radius: 6px;
+    font-size: 1.5vw;
+    margin-bottom: 1vh;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    padding-top: 0.5vw;
+    border: none;
+}
+
+.Er-button1 {
+    height: 7vh;
+    width: 33vw;
+    border-radius: 6px;
+    font-size: 1.5vw;
+    background-color: #034d72;
+    font-weight: bold;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+}
+
+.Er-para1 {
+    color: white;
+    padding-right: 100px;
+    padding-top: 6px;
+}

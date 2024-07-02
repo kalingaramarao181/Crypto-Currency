@@ -1,0 +1,279 @@
+body{
+  margin: 0px;
+  padding: 0px;
+}
+
+.home-sec1-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 75vh;
+  padding: 2vw;
+  background-size: cover;
+  margin-top: 0px;
+}
+.home-text-container{
+  width: 50vw;
+  height: 60vh;
+}
+.home-header{
+  font-size: 5vw;
+  margin-bottom: 1vh;
+  font-family: 'Bree Sarif';
+}
+.header-span{
+  color: rgb(20, 49, 102);
+}
+.home-desc{
+  font-size: 1.8vw;
+  color: rgb(58, 53, 53);
+  margin: 0.5vh;
+  margin-bottom: 4vh;
+}
+.home-image{
+  height: 60vh;
+  width: 40vw;
+}
+.home-button{
+  height: 7vh;
+  width: 12vw;
+  border-radius: 2vw;
+  background-color: rgb(23, 21, 66);
+  color: white;
+  font-size: 1.2vw;
+  cursor: pointer;
+}
+.home-button:hover{
+  background-color: rgb(182, 112, 7);
+}
+.home-cards-container{
+  border-radius: 2vw;
+  background-color: rgb(251, 251, 255);
+  margin: 1vw;
+  padding: 0.5vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border: 1px solid rgb(170, 166, 166);
+}
+.home-cards-header{
+  display: flex;
+  padding: 1vw;
+}
+.home-cards-header-2{
+  display: flex;
+  padding: 1vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-left: 1vw;
+  width: 93vw;
+  border-radius: 5px;
+  margin-bottom: 5vh;
+}
+.home-cards-header-button, .home-cards-header-button1{
+  width: 8vw;
+  height: 5vh;
+  font-size: 1.2vw;
+  background-color: transparent;
+  margin-right: 0.5vw;
+  border-radius: 1.5vw;
+  border: none;
+  cursor: pointer;
+}
+.home-coins-header-button1, .home-coins-header-button{
+  width: 8vw;
+  height: 5vh;
+  font-size: 1vw;
+  background-color: transparent;
+  margin-right: 0.5vw;
+  border-radius: 1.5vw;
+  border: none;
+  cursor: pointer;
+}
+.home-cards-header-button1,.home-coins-header-button1, .home-coins-header-button:hover, .home-cards-header-button:hover{
+  background-color: rgb(23, 21, 66);
+  color: white;
+}
+.cards-list{
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between ;
+  padding: 0px;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+.card{
+  border-radius: 1vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 20vw;
+  padding: 1vw;
+  background-color: white;
+  cursor: pointer;
+}
+.card:hover{
+  background-color: rgb(118, 118, 119);
+}
+.card-top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.card-icon{
+  margin-right: 1vw;
+  font-size: 2vw;
+  color: orange;
+}
+.card-name{
+  font-size: 1.5vw;
+  margin: 0px;
+}
+.card-bottom{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.card-rate{
+  font-size: 1.8vw;
+  margin: 0.8vw;
+}
+.card-subrate{
+  font-size: 1.5vw;
+  margin: 0.5vw;
+  color: rgb(188, 178, 178);
+}
+.card-percentage{
+  background-color: rgb(145, 3, 3);
+  border-radius: 1.5vw;
+  width: 5vw;
+  height: 4vh;
+  color: white;
+  text-align: center;
+  align-items: center;
+  padding: 0.1vw;
+}
+.home-section-2{
+  padding: 1vw;
+}
+.home-section-2-top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3vh;
+}
+.home-section-2-title{
+  font-size: 3vw;
+  color: rgb(23, 21, 66);
+}
+.home-section-2-button{
+  background-color: transparent;
+  font-size: 1.2vw;
+  border: none;
+  cursor: pointer;
+  border-bottom: 2px solid orange;
+  padding: 0.5vw;
+  font-weight: 600;
+}
+.home-section-2-button:hover{
+  color: rgb(99, 99, 245);
+}
+.home-section-2-table{
+  width: 95vw;
+  margin: 1vw;
+  padding: 2vw;
+  background-color: rgb(17, 23, 43);
+  border-radius: 5px;
+}
+.home-section-2-th{
+  text-align: center;
+  border-bottom: 1px solid rgb(255, 253, 253);
+  padding: 2vw;
+  color: white;
+}
+.home-section-2-td, .home-section-2-td-img-cont{
+  text-align: center;
+  padding: 2vw;
+  color: white;
+
+}
+.home-section-2-td-img-cont{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.2vw;
+}
+.home-section-2-td-img{
+  height: 3vh;
+  margin-right: 0.5vw;
+}
+.home-section-2-td-button{
+  height: 4vh;
+  width: 6vw;
+  border-radius: 15px;
+  border: none;
+  background-color: rgb(168, 110, 4);
+  color: white;
+  cursor: pointer;
+}
+.home-section-2-td-button:hover{
+  background-color: rgb(248, 194, 92);
+}
+
+.home-section-3{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+.home-section-3-cards{
+  list-style-type: none;
+  padding-left: 0px;
+  display: flex;
+  padding: 2vw;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 94vw;
+  background-color: white;
+}
+.home-section-3-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 1vw;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.home-section-3-card:hover{
+  background-color: rgb(222, 221, 221);
+}
+.home-section-3-card-img{
+  height: 15vh;
+}
+.home-section-3-card-sub-head{
+  font-size: 1.5vw;
+  color: rgb(160, 151, 151);
+  margin: 0px;
+}
+.home-section-3-card-head{
+  font-size: 1.8vw;
+  margin: 0px;
+}
+.home-section-3-card-desc{
+  text-align: center;
+  font-size: 1.2vw;
+  color: rgb(120, 116, 116);
+}
+.home-section-3-head{
+  font-size: 4vw;
+  font-family: "Reddit Mono";
+  color: rgb(8, 8, 8);
+}
+.home-section-3-desc{
+  font-size: 2vw;
+  font-family: "Reddit Mono";
+  color: rgb(165, 157, 157);
+}

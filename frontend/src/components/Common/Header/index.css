@@ -1,0 +1,54 @@
+@media only screen and (max-width: 600px) {
+    /* CSS rules for extra small devices */
+  }
+
+.header{
+    background-image: url("/public/Images/sidebar.png");
+    background-size: cover;
+    width: 98vw;
+    padding: 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+}
+
+.header-image{
+    height: 8vh;
+    width: 10vw;
+    border-radius: 5px;
+    margin-right: 3vw;
+}
+
+.header-container1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-button{
+    height: 8vh;
+    width: 10vw;
+    background-color: transparent;
+    font-size: 1.5vw;
+    color: white;
+    border: none;
+    margin-right: 0.5vw;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.header-button:hover, .header-button1:hover{
+    background-color: rgb(182, 112, 7);
+}
+
+.header-button1{
+    background-color: transparent;
+    height: 5vh;
+    width: 8vw;
+    border-radius: 5vw;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+}
