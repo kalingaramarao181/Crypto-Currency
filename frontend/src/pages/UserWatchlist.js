@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Button from "../components/Common/Button";
 import TabsComponent from "../components/Dashboard/Tabs";
 import axios from "axios";
 import { getUserCoins } from "../functions/getUserCoins";
 import Loader from "../components/Common/Loader";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 function UserWatchlist() {
   const [coins, setCoins] = useState([]);
   const [watchlist, setWatchList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const userMail = JSON.parse(Cookies.get("userData"))[0].email
+  const userMail = JSON.parse(Cookies.get("userData"))[0].email;
 
   useEffect(() => {
     const fetchUserCoins = async () => {
@@ -24,34 +24,41 @@ function UserWatchlist() {
     fetchUserCoins();
   }, []);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true); // Start loading
-        const response = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
-        );
-        
-        if (response && response.data) {
-          const allCoins = response.data;
-          console.log("All coins fetched:", allCoins);
-          
-          const filteredCoins = allCoins.filter((coin) => watchlist.includes(coin.id));
-          setCoins(filteredCoins);
-          
-          console.log("Filtered coins:", filteredCoins);
-        } else {
-          console.warn("No data received from the API.");
-        }
-        
-        console.log("Watchlist:", watchlist);
-      } catch (error) {
-        console.error("Error fetching coins:", error);
-      } finally {
-        setLoading(false); // End loading
-      }
-    };
+  const getData = useCallback(async (retryCount = 0) => {
+    try {
+      setLoading(true); // Start loading
+      const response = await axios.get(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+      );
 
+      if (response && response.data) {
+        const allCoins = response.data;
+        console.log("All coins fetched:", allCoins);
+
+        const filteredCoins = allCoins.filter((coin) => watchlist.includes(coin.id));
+        setCoins(filteredCoins);
+
+        console.log("Filtered coins:", filteredCoins);
+      } else {
+        console.warn("No data received from the API.");
+      }
+
+      console.log("Watchlist:", watchlist);
+    } catch (error) {
+      if (error.response && error.response.status === 429 && retryCount < 3) {
+        // Exponential backoff retry mechanism
+        const retryAfter = (2 ** retryCount) * 1000; // 1s, 2s, 4s
+        console.log(`Retrying after ${retryAfter / 1000} seconds...`);
+        setTimeout(() => getData(retryCount + 1), retryAfter);
+      } else {
+        console.error("Error fetching coins:", error);
+      }
+    } finally {
+      setLoading(false); // End loading
+    }
+  }, [watchlist]);
+
+  useEffect(() => {
     if (watchlist.length > 0) {
       getData(); // Initial fetch
       const interval = setInterval(() => {
@@ -62,7 +69,7 @@ function UserWatchlist() {
     } else {
       setLoading(false); // No watchlist, no loading
     }
-  }, [watchlist]);
+  }, [watchlist, getData]);
 
   if (loading) {
     return <Loader />;
@@ -71,7 +78,7 @@ function UserWatchlist() {
   return (
     <div>
       {watchlist.length > 0 ? (
-        <TabsComponent coins={coins}  />
+        <TabsComponent coins={coins} />
       ) : (
         <div>
           <h1 style={{ textAlign: "center" }}>

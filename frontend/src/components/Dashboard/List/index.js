@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
-import axios from "axios"
+import axios from "axios";
 import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import { convertNumber } from "../../../functions/convertNumber";
@@ -9,115 +9,111 @@ import { ToggleButton, Tooltip } from "@mui/material";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { saveItemToWatchlist } from "../../../functions/saveItemToWatchlist";
 import StarIcon from "@mui/icons-material/Star";
-import { removeItemToWatchlist } from "../../../functions/removeItemToWatchlist";
 import baseUrl from "../../config";
 import { saveItemToUserDB } from "../../../functions/saveItemToUserDB";
 import { saveCoinDataToDB } from "../../../functions/saveCoinDataToDB";
-import Cookies from "js-cookie"
+import { removeItemToWatchlist } from "../../../functions/removeItemToWatchlist";
+import Cookies from "js-cookie";
 
 function List({ coin, delay, chartData }) {
-  const currentPath = window.location.pathname
+  const currentPath = window.location.pathname;
   const watchlist = JSON.parse(localStorage.getItem("watchlist"));
   const [isCoinAdded, setIsCoinAdded] = useState(watchlist?.includes(coin.id));
-  const [coinData, setCoinData] = useState([])
+  const [coinData, setCoinData] = useState([]);
 
-  const userMail = JSON.parse(Cookies.get("userData"))[0].email
-
-
+  // Safely parse userData from cookies
+  const userData = Cookies.get("userData") ? JSON.parse(Cookies.get("userData")) : null;
+  const userMail = userData && userData[0] ? userData[0].email : "";
 
   return (
-    <div className="trade-container" >
-    <a href={`/coin/${coin.id}`}>
-      <motion.tr
-        className="list-row"
-        initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: delay }}
-        
-      >
-        <Tooltip title="Coin Image">
-          <td className="td-img">
-            <img src={coin.image} className="coin-image coin-image-td" />
-          </td>
-        </Tooltip>
-        <Tooltip title="Coin Info" placement="bottom-start">
-          <td className="td-info">
-            <div className="info-flex">
-              <p className="coin-symbol td-p">{coin.symbol}</p>
-              <p className="coin-name td-p">{coin.name}</p>
-            </div>
-          </td>
-        </Tooltip>
-        <Tooltip
-          title="Coin Price Percentage In 24hrs"
-          placement="bottom-start"
+    <div className="trade-container">
+      <a href={`/coin/${coin.id}`}>
+        <motion.tr
+          className="list-row"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: delay }}
         >
-          {coin.price_change_percentage_24h >= 0 ? (
+          <Tooltip title="Coin Image">
+            <td className="td-img">
+              <img src={coin.image} className="coin-image coin-image-td" alt="coinImage" />
+            </td>
+          </Tooltip>
+          <Tooltip title="Coin Info" placement="bottom-start">
+            <td className="td-info">
+              <div className="info-flex">
+                <p className="coin-symbol td-p">{coin.symbol}</p>
+                <p className="coin-name td-p">{coin.name}</p>
+              </div>
+            </td>
+          </Tooltip>
+          <Tooltip
+            title="Coin Price Percentage In 24hrs"
+            placement="bottom-start"
+          >
             <td>
               <div className="chip-flex">
                 <div className="price-chip">
                   {coin.price_change_percentage_24h.toFixed(2)}%
                 </div>
                 <div className="chip-icon td-chip-icon">
-                  <TrendingUpRoundedIcon />
+                  {coin.price_change_percentage_24h >= 0 ? (
+                    <TrendingUpRoundedIcon />
+                  ) : (
+                    <TrendingDownRoundedIcon />
+                  )}
                 </div>
               </div>
             </td>
-          ) : (
-            <td>
-              <div className="chip-flex">
-                <div className="price-chip red">
-                  {coin.price_change_percentage_24h.toFixed(2)}%
-                </div>
-                <div className="chip-icon td-chip-icon red">
-                  <TrendingDownRoundedIcon />
-                </div>
-              </div>
-            </td>
-          )}
-        </Tooltip>
-        <Tooltip title="Coin Price In USD" placement="bottom-end">
-          {coin.price_change_percentage_24h >= 0 ? (
-            <td className="current-price  td-current-price">
+          </Tooltip>
+          <Tooltip title="Coin Price In USD" placement="bottom-end">
+            <td className={`current-price td-current-price ${coin.price_change_percentage_24h < 0 ? "current-price-red" : ""}`}>
               ${coin.current_price.toLocaleString()}
             </td>
-          ) : (
-            <td className="current-price-red td-current-price">
-              ${coin.current_price.toLocaleString()}
+          </Tooltip>
+          <Tooltip title="Coin Total Volume" placement="bottom-end">
+            <td className="coin-name td-totalVolume">
+              {coin.total_volume.toLocaleString()}
             </td>
-          )}
-        </Tooltip>
-        <Tooltip title="Coin Total Volume" placement="bottom-end">
-          <td className="coin-name td-totalVolume">
-            {coin.total_volume.toLocaleString()}
+          </Tooltip>
+          <Tooltip title="Coin Market Capital" placement="bottom-end">
+            <td className="coin-name td-marketCap">
+              ${coin.market_cap.toLocaleString()}
+            </td>
+          </Tooltip>
+          <td className="coin-name mobile">${convertNumber(coin.market_cap)}</td>
+          <td
+            className={`watchlist-icon ${coin.price_change_percentage_24h < 0 && "watchlist-icon-red"}`}
+            onClick={(e) => {
+              if (isCoinAdded) {
+                // remove coin
+                removeItemToWatchlist(e, coin.id, setIsCoinAdded);
+              } else {
+                setIsCoinAdded(true);
+                saveItemToWatchlist(e, coin.id);
+              }
+            }}
+          >
+            {isCoinAdded ? <StarIcon /> : <StarOutlineIcon />}
           </td>
-        </Tooltip>
-        <Tooltip title="Coin Market Capital" placement="bottom-end">
-          <td className="coin-name td-marketCap">
-            ${coin.market_cap.toLocaleString()}
-          </td>
-        </Tooltip>
-        <td className="coin-name mobile">${convertNumber(coin.market_cap)}</td>
-        <td
-          className={`watchlist-icon ${
-            coin.price_change_percentage_24h < 0 && "watchlist-icon-red"
-          }`}
-          onClick={(e) => {
-            if (isCoinAdded) {
-              // remove coin
-              removeItemToWatchlist(e, coin.id, setIsCoinAdded);
-            } else {
-              setIsCoinAdded(true);
-              saveItemToWatchlist(e, coin.id);
-            }
-          }}
+        </motion.tr>
+      </a>
+      {currentPath === "/dashboard" && (
+        <ToggleButton
+          style={{ backgroundColor: "#2D855A", color: "white" }}
+          onClick={(e) => saveItemToUserDB(e, coin.id, userData)}
         >
-          {isCoinAdded ? <StarIcon /> : <StarOutlineIcon />}
-        </td>
-      </motion.tr>
-    </a>
-    {currentPath === `/dashboard` && <ToggleButton style={{backgroundColor: "#2D855A", color: "white"}} onClick={(e) => saveItemToUserDB(e, coin.id)}>Add</ToggleButton>}
-    {currentPath === `/coin/${coin.id}` && <ToggleButton style={{backgroundColor: "#2D855A", color: "white"}} onClick={(e) => saveCoinDataToDB(e, coin.id, chartData, userMail)}>Trade</ToggleButton>}
+          Add
+        </ToggleButton>
+      )}
+      {currentPath === `/coin/${coin.id}` && (
+        <ToggleButton
+          style={{ backgroundColor: "#2D855A", color: "white" }}
+          onClick={(e) => saveCoinDataToDB(e, coin.id, chartData, userMail)}
+        >
+          Trade
+        </ToggleButton>
+      )}
     </div>
   );
 }

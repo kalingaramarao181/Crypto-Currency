@@ -10,24 +10,25 @@ import { removeItemToWatchlist } from "../../../functions/removeItemToWatchlist"
 import { saveItemToUserDB } from "../../../functions/saveItemToUserDB";
 import Cookies from "js-cookie"
 
-
 function Grid({ coin, delay }) {
-  const currentPath = window.location.pathname
+  const currentPath = window.location.pathname;
   const watchlist = JSON.parse(localStorage.getItem("watchlist"));
   const [isCoinAdded, setIsCoinAdded] = useState(watchlist?.includes(coin.id));
-  const [graphView, setGraphView] = useState(true)
-  const userToken = Cookies.get("userToken")
-  const sidebarStatus = localStorage.getItem("sidebarStatus")
+  const [graphView, setGraphView] = useState(true);
+  const userToken = Cookies.get("userToken");
+  const sidebarStatus = localStorage.getItem("sidebarStatus");
 
-  const userData = JSON.parse(Cookies.get("userData"))
+  // Safely parse userData from cookies
+  const userData = JSON.parse(Cookies.get("userData") || "null");
 
-  const coinPath = sidebarStatus === "Home" && userData !== undefined && `/coin/${coin.id}`
+  // Conditionally set coinPath based on userData existence
+  const coinPath = sidebarStatus === "Home" && userData && `/coin/${coin.id}`;
 
   const onClickView = () => {
-    localStorage.setItem("sidebarStatus", "TradeCoins")
-    localStorage.setItem("coinId", coin.id)
-    window.location.reload()
-  }
+    localStorage.setItem("sidebarStatus", "TradeCoins");
+    localStorage.setItem("coinId", coin.id);
+    window.location.reload();
+  };
 
   return (
     <>
@@ -98,7 +99,7 @@ function Grid({ coin, delay }) {
             Market Capital : ${coin.market_cap.toLocaleString()}
           </p>
           {sidebarStatus === "Home" && currentPath === "/user-dashboard" && <button onClick={() => setGraphView(false)} className={`trd-button ${coin.price_change_percentage_24h < 0 && "trd-button-red"}`}>Trade</button>}
-          {currentPath === `/dashboard` && userToken !== undefined && <button className={`trd-button ${coin.price_change_percentage_24h < 0 && "trd-button-red"}`} onClick={(e) => saveItemToUserDB(e, coin.id, userData)}>Add</button>}
+          {currentPath === `/dashboard` && userToken && <button className={`trd-button ${coin.price_change_percentage_24h < 0 && "trd-button-red"}`} onClick={(e) => saveItemToUserDB(e, coin.id, userData)}>Add</button>}
           {sidebarStatus === "Favorates" && currentPath === "/user-dashboard" && <button onClick={() => onClickView()} className={`trd-button ${coin.price_change_percentage_24h < 0 && "trd-button-red"}`}>View</button>}
         </motion.div>
       </a>
@@ -106,4 +107,4 @@ function Grid({ coin, delay }) {
   );
 }
 
-export default Grid
+export default Grid;
